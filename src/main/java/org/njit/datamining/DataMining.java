@@ -23,7 +23,7 @@ public class DataMining {
 		try {
 			SparkSession spark = SparkSession.
 					builder()
-					.master("local[*]")
+					.master(args[0])
 					.appName("Data_Mining").getOrCreate();
 
 			JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
@@ -50,7 +50,7 @@ public class DataMining {
 					DataTypes.createStructField("Item_4", DataTypes.StringType, true)
 			});
 
-			File actual = new File(".");
+			File actual = new File(args[1]);
 			for( File f : actual.listFiles()){
 				if(f.isFile() && f.getName()!=null && f.getName().contains(".csv"))
 				{	
@@ -88,14 +88,13 @@ public class DataMining {
 							.setMinConfidence(userConfidence/100)
 							.fit(itemsArrayDF);
 
-					//Frequent Item Sets.
+					System.out.println("Frequent Item Sets:");
 					fpGrowthModel.freqItemsets().show(30,false);
 
-					//Association Rules.
+					System.out.println("Association Rules:");
 					fpGrowthModel.associationRules().show(30,false);
 
-					// Transform examines the input items against all the association rules and summarize the
-					// Consequents as prediction
+					System.out.println("Input items against all the Association Rules and Displayed as Consequents as prediction:");
 					fpGrowthModel.transform(itemsArrayDF).show(30,false);
 				}
 			}
