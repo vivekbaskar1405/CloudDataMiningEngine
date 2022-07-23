@@ -38,7 +38,7 @@ public class DataMining {
 			String minConf = scanner.nextLine();
 			userConfidence = Double.parseDouble(minConf);
 
-
+			AssociationRule AssociationRule = new AssociationRule();
 			System.out.println("\nPlease enter Minimum Support in Multiples of 10: Max Value : 100 eg: 50\n");
 			String minSupport = scanner.nextLine(); 
 			userSupport = Double.parseDouble(minSupport);
