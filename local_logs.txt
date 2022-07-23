@@ -1,0 +1,850 @@
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+22/07/22 16:53:49 INFO SparkContext: Running Spark version 3.2.1
+22/07/22 16:53:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+22/07/22 16:53:50 INFO ResourceUtils: ==============================================================
+22/07/22 16:53:50 INFO ResourceUtils: No custom resources configured for spark.driver.
+22/07/22 16:53:50 INFO ResourceUtils: ==============================================================
+22/07/22 16:53:50 INFO SparkContext: Submitted application: Data_Mining
+22/07/22 16:53:50 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(cores -> name: cores, amount: 1, script: , vendor: , memory -> name: memory, amount: 1024, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+22/07/22 16:53:50 INFO ResourceProfile: Limiting resource is cpu
+22/07/22 16:53:50 INFO ResourceProfileManager: Added ResourceProfile id: 0
+22/07/22 16:53:50 INFO SecurityManager: Changing view acls to: vivekbaskar
+22/07/22 16:53:50 INFO SecurityManager: Changing modify acls to: vivekbaskar
+22/07/22 16:53:50 INFO SecurityManager: Changing view acls groups to: 
+22/07/22 16:53:50 INFO SecurityManager: Changing modify acls groups to: 
+22/07/22 16:53:50 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(vivekbaskar); groups with view permissions: Set(); users  with modify permissions: Set(vivekbaskar); groups with modify permissions: Set()
+22/07/22 16:53:50 INFO Utils: Successfully started service 'sparkDriver' on port 53342.
+22/07/22 16:53:50 INFO SparkEnv: Registering MapOutputTracker
+22/07/22 16:53:50 INFO SparkEnv: Registering BlockManagerMaster
+22/07/22 16:53:50 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+22/07/22 16:53:50 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+22/07/22 16:53:50 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+22/07/22 16:53:51 INFO DiskBlockManager: Created local directory at /private/var/folders/lq/qb_dcv7d4vs_hnw2p4n1c3l80000gn/T/blockmgr-7e9449b8-3836-4c13-aa0b-e657a29f64dd
+22/07/22 16:53:51 INFO MemoryStore: MemoryStore started with capacity 912.3 MiB
+22/07/22 16:53:51 INFO SparkEnv: Registering OutputCommitCoordinator
+22/07/22 16:53:51 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+22/07/22 16:53:51 INFO SparkUI: Bound SparkUI to 0.0.0.0, and started at http://192.168.1.7:4040
+22/07/22 16:53:51 INFO Executor: Starting executor ID driver on host 192.168.1.7
+22/07/22 16:53:52 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 53343.
+22/07/22 16:53:52 INFO NettyBlockTransferService: Server created on 192.168.1.7:53343
+22/07/22 16:53:52 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+22/07/22 16:53:52 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, 192.168.1.7, 53343, None)
+22/07/22 16:53:52 INFO BlockManagerMasterEndpoint: Registering block manager 192.168.1.7:53343 with 912.3 MiB RAM, BlockManagerId(driver, 192.168.1.7, 53343, None)
+22/07/22 16:53:52 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, 192.168.1.7, 53343, None)
+22/07/22 16:53:52 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, 192.168.1.7, 53343, None)
+Welcome to Data Mining NJIT CS634 Summer 2022 : Dev :  Vivek Baskar
+Final Term Project : Spark on EC2 - Association Rule Mining
+Please enter Minimum Confidence in Multiples of 10: Max Value : 100 eg: 50 
+
+10
+
+Please enter Minimum Support in Multiples of 10: Max Value : 100 eg: 50
+
+20
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset7.csv
+Input Data:
++-------+-------+-------+------+
+|Item_1 |Item_2 |item_3 |Item_4|
++-------+-------+-------+------+
+|Soap   |Daipers|null   |null  |
+|Cream  |Soap   |Daipers|Lotion|
+|Lotion |Tissues|Cotton |null  |
+|Cotton |Tissues|Cream  |null  |
+|Soap   |Daipers|Lotion |null  |
+|Tissues|Cream  |null   |null  |
++-------+-------+-------+------+
+
+Items Array Data:
++------------------------------+
+|Items                         |
++------------------------------+
+|[Soap, Daipers]               |
+|[Cream, Soap, Daipers, Lotion]|
+|[Lotion, Tissues, Cotton]     |
+|[Cotton, Tissues, Cream]      |
+|[Soap, Daipers, Lotion]       |
+|[Tissues, Cream]              |
++------------------------------+
+
+Frequent Item Sets:
++-----------------------+----+
+|items                  |freq|
++-----------------------+----+
+|[Daipers]              |3   |
+|[Daipers, Soap]        |3   |
+|[Cotton]               |2   |
+|[Cotton, Tissues]      |2   |
+|[Lotion]               |3   |
+|[Lotion, Daipers]      |2   |
+|[Lotion, Daipers, Soap]|2   |
+|[Lotion, Soap]         |2   |
+|[Soap]                 |3   |
+|[Cream]                |3   |
+|[Cream, Tissues]       |2   |
+|[Tissues]              |3   |
++-----------------------+----+
+
+Association Rules:
++-----------------+----------+------------------+------------------+------------------+
+|antecedent       |consequent|confidence        |lift              |support           |
++-----------------+----------+------------------+------------------+------------------+
+|[Daipers]        |[Soap]    |1.0               |2.0               |0.5               |
+|[Daipers]        |[Lotion]  |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Tissues]        |[Cotton]  |0.6666666666666666|2.0               |0.3333333333333333|
+|[Tissues]        |[Cream]   |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Soap]           |[Daipers] |1.0               |2.0               |0.5               |
+|[Soap]           |[Lotion]  |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Cotton]         |[Tissues] |1.0               |2.0               |0.3333333333333333|
+|[Lotion, Soap]   |[Daipers] |1.0               |2.0               |0.3333333333333333|
+|[Lotion]         |[Daipers] |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Lotion]         |[Soap]    |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Lotion, Daipers]|[Soap]    |1.0               |2.0               |0.3333333333333333|
+|[Daipers, Soap]  |[Lotion]  |0.6666666666666666|1.3333333333333333|0.3333333333333333|
+|[Cream]          |[Tissues] |0.6666666666666666|1.3333333333333333|0.3333333333333333|
++-----------------+----------+------------------+------------------+------------------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++------------------------------+----------------------+
+|Items                         |prediction            |
++------------------------------+----------------------+
+|[Soap, Daipers]               |[Lotion]              |
+|[Cream, Soap, Daipers, Lotion]|[Tissues]             |
+|[Lotion, Tissues, Cotton]     |[Cream, Daipers, Soap]|
+|[Cotton, Tissues, Cream]      |[]                    |
+|[Soap, Daipers, Lotion]       |[]                    |
+|[Tissues, Cream]              |[Cotton]              |
++------------------------------+----------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset6.csv
+Input Data:
++------+-------+-------+-------+
+|Item_1|Item_2 |item_3 |Item_4 |
++------+-------+-------+-------+
+|Milk  |Bread  |Butter |null   |
+|Bread |Butter |Cookies|null   |
+|Milk  |Bread  |Butter |Cookies|
+|Milk  |Cookies|null   |null   |
+|Milk  |Bread  |Butter |null   |
+|Bread |Butter |Egg    |Cookies|
+|Milk  |Butter |Bread  |null   |
+|Milk  |Egg    |Bread  |Butter |
+|Milk  |Butter |Egg    |Ketchup|
+|Bread |Butter |Ketchup|null   |
+|Milk  |Bread  |Butter |null   |
+|Milk  |Bread  |Cookies|Ketchup|
++------+-------+-------+-------+
+
+Items Array Data:
++-------------------------------+
+|Items                          |
++-------------------------------+
+|[Milk, Bread, Butter]          |
+|[Bread, Butter, Cookies]       |
+|[Milk, Bread, Butter, Cookies] |
+|[Milk, Cookies]                |
+|[Milk, Bread, Butter]          |
+|[Bread, Butter, Egg, Cookies]  |
+|[Milk, Butter, Bread]          |
+|[Milk, Egg, Bread, Butter]     |
+|[Milk, Butter, Egg, Ketchup]   |
+|[Bread, Butter, Ketchup]       |
+|[Milk, Bread, Butter]          |
+|[Milk, Bread, Cookies, Ketchup]|
++-------------------------------+
+
+Frequent Item Sets:
++------------------------+----+
+|items                   |freq|
++------------------------+----+
+|[Milk]                  |9   |
+|[Milk, Butter]          |7   |
+|[Milk, Butter, Bread]   |6   |
+|[Milk, Bread]           |7   |
+|[Egg]                   |3   |
+|[Egg, Butter]           |3   |
+|[Ketchup]               |3   |
+|[Butter]                |10  |
+|[Butter, Bread]         |9   |
+|[Cookies]               |5   |
+|[Cookies, Milk]         |3   |
+|[Cookies, Butter]       |3   |
+|[Cookies, Butter, Bread]|3   |
+|[Cookies, Bread]        |4   |
+|[Bread]                 |10  |
++------------------------+----+
+
+Association Rules:
++-----------------+----------+------------------+------------------+------------------+
+|antecedent       |consequent|confidence        |lift              |support           |
++-----------------+----------+------------------+------------------+------------------+
+|[Butter]         |[Milk]    |0.7               |0.9333333333333332|0.5833333333333334|
+|[Butter]         |[Egg]     |0.3               |1.2               |0.25              |
+|[Butter]         |[Bread]   |0.9               |1.08              |0.75              |
+|[Butter]         |[Cookies] |0.3               |0.72              |0.25              |
+|[Egg]            |[Butter]  |1.0               |1.2               |0.25              |
+|[Cookies, Butter]|[Bread]   |1.0               |1.2               |0.25              |
+|[Milk, Butter]   |[Bread]   |0.8571428571428571|1.0285714285714285|0.5               |
+|[Milk]           |[Butter]  |0.7777777777777778|0.9333333333333333|0.5833333333333334|
+|[Milk]           |[Bread]   |0.7777777777777778|0.9333333333333333|0.5833333333333334|
+|[Milk]           |[Cookies] |0.3333333333333333|0.7999999999999999|0.25              |
+|[Milk, Bread]    |[Butter]  |0.8571428571428571|1.0285714285714285|0.5               |
+|[Butter, Bread]  |[Milk]    |0.6666666666666666|0.8888888888888888|0.5               |
+|[Butter, Bread]  |[Cookies] |0.3333333333333333|0.7999999999999999|0.25              |
+|[Bread]          |[Milk]    |0.7               |0.9333333333333332|0.5833333333333334|
+|[Bread]          |[Butter]  |0.9               |1.08              |0.75              |
+|[Bread]          |[Cookies] |0.4               |0.96              |0.3333333333333333|
+|[Cookies]        |[Milk]    |0.6               |0.7999999999999999|0.25              |
+|[Cookies]        |[Butter]  |0.6               |0.72              |0.25              |
+|[Cookies]        |[Bread]   |0.8               |0.96              |0.3333333333333333|
+|[Cookies, Bread] |[Butter]  |0.75              |0.8999999999999999|0.25              |
++-----------------+----------+------------------+------------------+------------------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++-------------------------------+--------------------+
+|Items                          |prediction          |
++-------------------------------+--------------------+
+|[Milk, Bread, Butter]          |[Egg, Cookies]      |
+|[Bread, Butter, Cookies]       |[Milk, Egg]         |
+|[Milk, Bread, Butter, Cookies] |[Egg]               |
+|[Milk, Cookies]                |[Butter, Bread]     |
+|[Milk, Bread, Butter]          |[Egg, Cookies]      |
+|[Bread, Butter, Egg, Cookies]  |[Milk]              |
+|[Milk, Butter, Bread]          |[Egg, Cookies]      |
+|[Milk, Egg, Bread, Butter]     |[Cookies]           |
+|[Milk, Butter, Egg, Ketchup]   |[Bread, Cookies]    |
+|[Bread, Butter, Ketchup]       |[Milk, Egg, Cookies]|
+|[Milk, Bread, Butter]          |[Egg, Cookies]      |
+|[Milk, Bread, Cookies, Ketchup]|[Butter]            |
++-------------------------------+--------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset4.csv
+Input Data:
++--------+--------+--------+--------+
+|Item_1  |Item_2  |item_3  |Item_4  |
++--------+--------+--------+--------+
+|Tomato  |Onions  |Potato  |Garlic  |
+|Tomato  |Potato  |null    |null    |
+|Potato  |Onions  |Garlic  |null    |
+|Onions  |Garlic  |Cilantro|null    |
+|Garlic  |Cilantro|Potato  |null    |
+|Cilantro|Tomato  |null    |null    |
+|Cilantro|Garlic  |Ginger  |null    |
+|Ginger  |Potato  |Tomato  |Onions  |
+|Ginger  |Garlic  |null    |null    |
+|Onions  |Garlic  |Ginger  |null    |
+|Tomato  |Cilantro|Potato  |null    |
+|Onions  |Tomato  |Potato  |null    |
+|Cilantro|Tomato  |Garlic  |null    |
+|Garlic  |Ginger  |null    |null    |
+|Garlic  |Ginger  |Onions  |null    |
+|Tomato  |Potato  |Onions  |Cilantro|
+|Potato  |Tomato  |null    |null    |
+|Cilantro|Garlic  |null    |null    |
+|Ginger  |Garlic  |Cilantro|Potato  |
+|Ginger  |Garlic  |Tomato  |null    |
++--------+--------+--------+--------+
+
+Items Array Data:
++----------------------------------+
+|Items                             |
++----------------------------------+
+|[Tomato, Onions, Potato, Garlic]  |
+|[Tomato, Potato]                  |
+|[Potato, Onions, Garlic]          |
+|[Onions, Garlic, Cilantro]        |
+|[Garlic, Cilantro, Potato]        |
+|[Cilantro, Tomato]                |
+|[Cilantro, Garlic, Ginger]        |
+|[Ginger, Potato, Tomato, Onions]  |
+|[Ginger, Garlic]                  |
+|[Onions, Garlic, Ginger]          |
+|[Tomato, Cilantro, Potato]        |
+|[Onions, Tomato, Potato]          |
+|[Cilantro, Tomato, Garlic]        |
+|[Garlic, Ginger]                  |
+|[Garlic, Ginger, Onions]          |
+|[Tomato, Potato, Onions, Cilantro]|
+|[Potato, Tomato]                  |
+|[Cilantro, Garlic]                |
+|[Ginger, Garlic, Cilantro, Potato]|
+|[Ginger, Garlic, Tomato]          |
++----------------------------------+
+
+Frequent Item Sets:
++------------------------+----+
+|items                   |freq|
++------------------------+----+
+|[Tomato]                |10  |
+|[Tomato, Potato]        |7   |
+|[Onions]                |8   |
+|[Onions, Tomato]        |4   |
+|[Onions, Tomato, Potato]|4   |
+|[Onions, Potato]        |5   |
+|[Onions, Garlic]        |5   |
+|[Ginger]                |8   |
+|[Ginger, Garlic]        |7   |
+|[Potato]                |10  |
+|[Potato, Garlic]        |4   |
+|[Cilantro]              |9   |
+|[Cilantro, Tomato]      |4   |
+|[Cilantro, Potato]      |4   |
+|[Cilantro, Garlic]      |6   |
+|[Garlic]                |13  |
++------------------------+----+
+
+Association Rules:
++----------------+----------+-------------------+------------------+-------+
+|antecedent      |consequent|confidence         |lift              |support|
++----------------+----------+-------------------+------------------+-------+
+|[Onions]        |[Tomato]  |0.5                |1.0               |0.2    |
+|[Onions]        |[Potato]  |0.625              |1.25              |0.25   |
+|[Onions]        |[Garlic]  |0.625              |0.9615384615384615|0.25   |
+|[Garlic]        |[Onions]  |0.38461538461538464|0.9615384615384616|0.25   |
+|[Garlic]        |[Ginger]  |0.5384615384615384 |1.346153846153846 |0.35   |
+|[Garlic]        |[Potato]  |0.3076923076923077 |0.6153846153846154|0.2    |
+|[Garlic]        |[Cilantro]|0.46153846153846156|1.0256410256410258|0.3    |
+|[Onions, Potato]|[Tomato]  |0.8                |1.6               |0.2    |
+|[Onions, Tomato]|[Potato]  |1.0                |2.0               |0.2    |
+|[Ginger]        |[Garlic]  |0.875              |1.346153846153846 |0.35   |
+|[Tomato]        |[Potato]  |0.7                |1.4               |0.35   |
+|[Tomato]        |[Onions]  |0.4                |1.0               |0.2    |
+|[Tomato]        |[Cilantro]|0.4                |0.888888888888889 |0.2    |
+|[Cilantro]      |[Tomato]  |0.4444444444444444 |0.8888888888888888|0.2    |
+|[Cilantro]      |[Potato]  |0.4444444444444444 |0.8888888888888888|0.2    |
+|[Cilantro]      |[Garlic]  |0.6666666666666666 |1.0256410256410255|0.3    |
+|[Tomato, Potato]|[Onions]  |0.5714285714285714 |1.4285714285714284|0.2    |
+|[Potato]        |[Tomato]  |0.7                |1.4               |0.35   |
+|[Potato]        |[Onions]  |0.5                |1.25              |0.25   |
+|[Potato]        |[Garlic]  |0.4                |0.6153846153846154|0.2    |
+|[Potato]        |[Cilantro]|0.4                |0.888888888888889 |0.2    |
++----------------+----------+-------------------+------------------+-------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++----------------------------------+--------------------------------+
+|Items                             |prediction                      |
++----------------------------------+--------------------------------+
+|[Tomato, Onions, Potato, Garlic]  |[Ginger, Cilantro]              |
+|[Tomato, Potato]                  |[Onions, Cilantro, Garlic]      |
+|[Potato, Onions, Garlic]          |[Tomato, Ginger, Cilantro]      |
+|[Onions, Garlic, Cilantro]        |[Tomato, Potato, Ginger]        |
+|[Garlic, Cilantro, Potato]        |[Onions, Ginger, Tomato]        |
+|[Cilantro, Tomato]                |[Potato, Onions, Garlic]        |
+|[Cilantro, Garlic, Ginger]        |[Onions, Potato, Tomato]        |
+|[Ginger, Potato, Tomato, Onions]  |[Garlic, Cilantro]              |
+|[Ginger, Garlic]                  |[Onions, Potato, Cilantro]      |
+|[Onions, Garlic, Ginger]          |[Tomato, Potato, Cilantro]      |
+|[Tomato, Cilantro, Potato]        |[Onions, Garlic]                |
+|[Onions, Tomato, Potato]          |[Garlic, Cilantro]              |
+|[Cilantro, Tomato, Garlic]        |[Onions, Ginger, Potato]        |
+|[Garlic, Ginger]                  |[Onions, Potato, Cilantro]      |
+|[Garlic, Ginger, Onions]          |[Tomato, Potato, Cilantro]      |
+|[Tomato, Potato, Onions, Cilantro]|[Garlic]                        |
+|[Potato, Tomato]                  |[Onions, Cilantro, Garlic]      |
+|[Cilantro, Garlic]                |[Onions, Ginger, Potato, Tomato]|
+|[Ginger, Garlic, Cilantro, Potato]|[Onions, Tomato]                |
+|[Ginger, Garlic, Tomato]          |[Onions, Potato, Cilantro]      |
++----------------------------------+--------------------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset5.csv
+Input Data:
++--------+--------+--------+------+
+|Item_1  |Item_2  |item_3  |Item_4|
++--------+--------+--------+------+
+|Sugar   |Honey   |Choclate|null  |
+|Mug     |Coffee  |Tea     |null  |
+|Coffee  |Mug     |Tea     |Sugar |
+|Choclate|Coffee  |Sugar   |null  |
+|Mug     |Choclate|null    |null  |
+|Choclate|Coffee  |Sugar   |Mug   |
+|Honey   |Tea     |null    |null  |
+|Honey   |Choclate|Coffee  |null  |
+|Coffee  |Tea     |null    |null  |
+|Tea     |Mug     |null    |null  |
+|Coffee  |Honey   |Tea     |null  |
+|Honey   |Sugar   |null    |null  |
+|Coffee  |Mug     |Choclate|null  |
+|Sugar   |Tea     |Mug     |null  |
+|Tea     |Coffee  |Sugar   |Mug   |
+|Honey   |Tea     |null    |null  |
+|Honey   |Coffee  |Tea     |null  |
+|Sugar   |Honey   |null    |null  |
+|Sugar   |Tea     |Coffee  |Mug   |
+|Mug     |Choclate|null    |null  |
++--------+--------+--------+------+
+
+Items Array Data:
++------------------------------+
+|Items                         |
++------------------------------+
+|[Sugar, Honey, Choclate]      |
+|[Mug, Coffee, Tea]            |
+|[Coffee, Mug, Tea, Sugar]     |
+|[Choclate, Coffee, Sugar]     |
+|[Mug, Choclate]               |
+|[Choclate, Coffee, Sugar, Mug]|
+|[Honey, Tea]                  |
+|[Honey, Choclate, Coffee]     |
+|[Coffee, Tea]                 |
+|[Tea, Mug]                    |
+|[Coffee, Honey, Tea]          |
+|[Honey, Sugar]                |
+|[Coffee, Mug, Choclate]       |
+|[Sugar, Tea, Mug]             |
+|[Tea, Coffee, Sugar, Mug]     |
+|[Honey, Tea]                  |
+|[Honey , Coffee, Tea]         |
+|[Sugar, Honey]                |
+|[Sugar, Tea, Coffee, Mug]     |
+|[Mug, Choclate]               |
++------------------------------+
+
+Frequent Item Sets:
++--------------------+----+
+|items               |freq|
++--------------------+----+
+|[Mug]               |10  |
+|[Mug, Coffee]       |6   |
+|[Mug, Coffee, Tea]  |4   |
+|[Mug, Tea]          |6   |
+|[Honey]             |7   |
+|[Choclate]          |7   |
+|[Choclate, Mug]     |4   |
+|[Choclate, Coffee]  |4   |
+|[Coffee]            |11  |
+|[Coffee, Tea]       |7   |
+|[Sugar]             |9   |
+|[Sugar, Mug]        |5   |
+|[Sugar, Mug, Coffee]|4   |
+|[Sugar, Mug, Tea]   |4   |
+|[Sugar, Coffee]     |5   |
+|[Sugar, Tea]        |4   |
+|[Tea]               |11  |
++--------------------+----+
+
+Association Rules:
++---------------+----------+-------------------+------------------+-------+
+|antecedent     |consequent|confidence         |lift              |support|
++---------------+----------+-------------------+------------------+-------+
+|[Coffee]       |[Mug]     |0.5454545454545454 |1.0909090909090908|0.3    |
+|[Coffee]       |[Choclate]|0.36363636363636365|1.038961038961039 |0.2    |
+|[Coffee]       |[Tea]     |0.6363636363636364 |1.1570247933884297|0.35   |
+|[Coffee]       |[Sugar]   |0.45454545454545453|1.01010101010101  |0.25   |
+|[Mug, Tea]     |[Coffee]  |0.6666666666666666 |1.212121212121212 |0.2    |
+|[Mug, Tea]     |[Sugar]   |0.6666666666666666 |1.4814814814814814|0.2    |
+|[Tea]          |[Mug]     |0.5454545454545454 |1.0909090909090908|0.3    |
+|[Tea]          |[Coffee]  |0.6363636363636364 |1.1570247933884297|0.35   |
+|[Tea]          |[Sugar]   |0.36363636363636365|0.8080808080808081|0.2    |
+|[Coffee, Tea]  |[Mug]     |0.5714285714285714 |1.1428571428571428|0.2    |
+|[Choclate]     |[Mug]     |0.5714285714285714 |1.1428571428571428|0.2    |
+|[Choclate]     |[Coffee]  |0.5714285714285714 |1.0389610389610389|0.2    |
+|[Mug, Coffee]  |[Tea]     |0.6666666666666666 |1.212121212121212 |0.2    |
+|[Mug, Coffee]  |[Sugar]   |0.6666666666666666 |1.4814814814814814|0.2    |
+|[Mug]          |[Coffee]  |0.6                |1.0909090909090908|0.3    |
+|[Mug]          |[Tea]     |0.6                |1.0909090909090908|0.3    |
+|[Mug]          |[Choclate]|0.4                |1.142857142857143 |0.2    |
+|[Mug]          |[Sugar]   |0.5                |1.1111111111111112|0.25   |
+|[Sugar, Coffee]|[Mug]     |0.8                |1.6               |0.2    |
+|[Sugar, Mug]   |[Coffee]  |0.8                |1.4545454545454546|0.2    |
+|[Sugar, Mug]   |[Tea]     |0.8                |1.4545454545454546|0.2    |
+|[Sugar, Tea]   |[Mug]     |1.0                |2.0               |0.2    |
+|[Sugar]        |[Mug]     |0.5555555555555556 |1.1111111111111112|0.25   |
+|[Sugar]        |[Coffee]  |0.5555555555555556 |1.0101010101010102|0.25   |
+|[Sugar]        |[Tea]     |0.4444444444444444 |0.808080808080808 |0.2    |
++---------------+----------+-------------------+------------------+-------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++------------------------------+-------------------------+
+|Items                         |prediction               |
++------------------------------+-------------------------+
+|[Sugar, Honey, Choclate]      |[Mug, Coffee, Tea]       |
+|[Mug, Coffee, Tea]            |[Choclate, Sugar]        |
+|[Coffee, Mug, Tea, Sugar]     |[Choclate]               |
+|[Choclate, Coffee, Sugar]     |[Mug, Tea]               |
+|[Mug, Choclate]               |[Coffee, Tea, Sugar]     |
+|[Choclate, Coffee, Sugar, Mug]|[Tea]                    |
+|[Honey, Tea]                  |[Mug, Coffee, Sugar]     |
+|[Honey, Choclate, Coffee]     |[Mug, Tea, Sugar]        |
+|[Coffee, Tea]                 |[Mug, Choclate, Sugar]   |
+|[Tea, Mug]                    |[Coffee, Sugar, Choclate]|
+|[Coffee, Honey, Tea]          |[Mug, Choclate, Sugar]   |
+|[Honey, Sugar]                |[Mug, Coffee, Tea]       |
+|[Coffee, Mug, Choclate]       |[Tea, Sugar]             |
+|[Sugar, Tea, Mug]             |[Coffee, Choclate]       |
+|[Tea, Coffee, Sugar, Mug]     |[Choclate]               |
+|[Honey, Tea]                  |[Mug, Coffee, Sugar]     |
+|[Honey , Coffee, Tea]         |[Mug, Choclate, Sugar]   |
+|[Sugar, Honey]                |[Mug, Coffee, Tea]       |
+|[Sugar, Tea, Coffee, Mug]     |[Choclate]               |
+|[Mug, Choclate]               |[Coffee, Tea, Sugar]     |
++------------------------------+-------------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset1.csv
+Input Data:
++-------+-------+-------+-------+
+|Item_1 |Item_2 |item_3 |Item_4 |
++-------+-------+-------+-------+
+|Soap   |Daipers|null   |null   |
+|Cream  |Soap   |Daipers|Lotion |
+|Lotion |Tissues|Cotton |null   |
+|Cotton |Tissues|Cream  |null   |
+|Cotton |Cream  |Lotion |Daipers|
+|Soap   |Tissues|null   |null   |
+|Tissues|Cream  |null   |null   |
+|Daipers|Cream  |Lotion |null   |
+|Tissues|Cotton |null   |null   |
+|Soap   |Cream  |Lotion |null   |
+|Daipers|Soap   |Tissues|null   |
+|Lotion |Tissues|Cotton |null   |
+|Cotton |Cream  |Lotion |null   |
+|Cream  |Lotion |null   |null   |
+|Cream  |Cotton |Tissues|Lotion |
+|Daipers|Soap   |Tissues|null   |
+|Cotton |Tissues|null   |null   |
+|Tissues|Soap   |Cream  |null   |
+|Lotion |Soap   |null   |null   |
+|Soap   |Tissues|Lotion |null   |
++-------+-------+-------+-------+
+
+Items Array Data:
++---------------------------------+
+|Items                            |
++---------------------------------+
+|[Soap, Daipers]                  |
+|[Cream, Soap, Daipers, Lotion]   |
+|[Lotion, Tissues, Cotton]        |
+|[Cotton, Tissues, Cream]         |
+|[Cotton, Cream , Lotion, Daipers]|
+|[Soap, Tissues]                  |
+|[Tissues, Cream]                 |
+|[Daipers, Cream, Lotion]         |
+|[Tissues, Cotton]                |
+|[Soap, Cream, Lotion]            |
+|[Daipers, Soap, Tissues]         |
+|[Lotion, Tissues, Cotton]        |
+|[Cotton, Cream, Lotion]          |
+|[Cream, Lotion]                  |
+|[Cream, Cotton, Tissues, Lotion] |
+|[Daipers, Soap, Tissues]         |
+|[Cotton, Tissues]                |
+|[Tissues, Soap, Cream]           |
+|[Lotion, Soap]                   |
+|[Soap , Tissues, Lotion]         |
++---------------------------------+
+
+Frequent Item Sets:
++-----------------+----+
+|items            |freq|
++-----------------+----+
+|[Cream]          |9   |
+|[Cream, Lotion]  |6   |
+|[Cream, Tissues] |4   |
+|[Daipers]        |6   |
+|[Daipers, Soap]  |4   |
+|[Soap]           |8   |
+|[Soap, Tissues]  |4   |
+|[Lotion]         |11  |
+|[Lotion, Tissues]|4   |
+|[Cotton]         |8   |
+|[Cotton, Lotion] |5   |
+|[Cotton, Tissues]|6   |
+|[Tissues]        |12  |
++-----------------+----+
+
+Association Rules:
++----------+----------+-------------------+------------------+-------+
+|antecedent|consequent|confidence         |lift              |support|
++----------+----------+-------------------+------------------+-------+
+|[Daipers] |[Soap]    |0.6666666666666666 |1.6666666666666665|0.2    |
+|[Tissues] |[Cream]   |0.3333333333333333 |0.7407407407407407|0.2    |
+|[Tissues] |[Soap]    |0.3333333333333333 |0.8333333333333333|0.2    |
+|[Tissues] |[Lotion]  |0.3333333333333333 |0.606060606060606 |0.2    |
+|[Tissues] |[Cotton]  |0.5                |1.25              |0.3    |
+|[Soap]    |[Daipers] |0.5                |1.6666666666666667|0.2    |
+|[Soap]    |[Tissues] |0.5                |0.8333333333333334|0.2    |
+|[Cotton]  |[Lotion]  |0.625              |1.1363636363636362|0.25   |
+|[Cotton]  |[Tissues] |0.75               |1.25              |0.3    |
+|[Lotion]  |[Cream]   |0.5454545454545454 |1.212121212121212 |0.3    |
+|[Lotion]  |[Tissues] |0.36363636363636365|0.6060606060606061|0.2    |
+|[Lotion]  |[Cotton]  |0.45454545454545453|1.1363636363636362|0.25   |
+|[Cream]   |[Lotion]  |0.6666666666666666 |1.212121212121212 |0.3    |
+|[Cream]   |[Tissues] |0.4444444444444444 |0.7407407407407407|0.2    |
++----------+----------+-------------------+------------------+-------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++---------------------------------+---------------------------------+
+|Items                            |prediction                       |
++---------------------------------+---------------------------------+
+|[Soap, Daipers]                  |[Tissues]                        |
+|[Cream, Soap, Daipers, Lotion]   |[Tissues, Cotton]                |
+|[Lotion, Tissues, Cotton]        |[Cream, Soap]                    |
+|[Cotton, Tissues, Cream]         |[Soap, Lotion]                   |
+|[Cotton, Cream , Lotion, Daipers]|[Soap, Tissues, Cream]           |
+|[Soap, Tissues]                  |[Cream, Lotion, Cotton, Daipers] |
+|[Tissues, Cream]                 |[Soap, Lotion, Cotton]           |
+|[Daipers, Cream, Lotion]         |[Soap, Tissues, Cotton]          |
+|[Tissues, Cotton]                |[Cream, Soap, Lotion]            |
+|[Soap, Cream, Lotion]            |[Daipers, Tissues, Cotton]       |
+|[Daipers, Soap, Tissues]         |[Cream, Lotion, Cotton]          |
+|[Lotion, Tissues, Cotton]        |[Cream, Soap]                    |
+|[Cotton, Cream, Lotion]          |[Tissues]                        |
+|[Cream, Lotion]                  |[Tissues, Cotton]                |
+|[Cream, Cotton, Tissues, Lotion] |[Soap]                           |
+|[Daipers, Soap, Tissues]         |[Cream, Lotion, Cotton]          |
+|[Cotton, Tissues]                |[Cream, Soap, Lotion]            |
+|[Tissues, Soap, Cream]           |[Lotion, Cotton, Daipers]        |
+|[Lotion, Soap]                   |[Daipers, Tissues, Cream, Cotton]|
+|[Soap , Tissues, Lotion]         |[Cream, Soap, Cotton]            |
++---------------------------------+---------------------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset2.csv
+Input Data:
++------+------+------+------+
+|Item_1|Item_2|item_3|Item_4|
++------+------+------+------+
+|Eggs  |Butter|null  |null  |
+|Banana|Milk  |Bread |Eggs  |
+|Bread |Butter|null  |null  |
+|Milk  |Bread |Banana|null  |
+|Eggs  |Bread |null  |null  |
+|Cheese|Bread |Butter|null  |
+|Cheese|Milk  |Banana|Eggs  |
+|Milk  |Banana|Bread |null  |
+|Milk  |Eggs  |null  |null  |
+|Eggs  |Banana|Bread |Milk  |
+|Milk  |Eggs  |Cheese|null  |
+|Cheese|Banana|Bread |null  |
+|Eggs  |Bread |null  |null  |
+|Butter|Bread |Cheese|null  |
+|Milk  |Eggs  |Butter|Banana|
+|Eggs  |Banana|null  |null  |
+|Eggs  |Butter|Cheese|null  |
+|Bread |Eggs  |Milk  |null  |
+|Cheese|Bread |Eggs  |Banana|
+|Milk  |Cheese|Butter|null  |
++------+------+------+------+
+
+Items Array Data:
++-----------------------------+
+|Items                        |
++-----------------------------+
+|[Eggs , Butter]              |
+|[Banana, Milk, Bread, Eggs]  |
+|[Bread, Butter]              |
+|[Milk , Bread, Banana]       |
+|[Eggs , Bread]               |
+|[Cheese, Bread, Butter]      |
+|[Cheese, Milk, Banana, Eggs] |
+|[Milk , Banana, Bread]       |
+|[Milk, Eggs]                 |
+|[Eggs , Banana, Bread, Milk] |
+|[Milk, Eggs, Cheese]         |
+|[Cheese, Banana, Bread]      |
+|[Eggs , Bread]               |
+|[Butter, Bread, Cheese]      |
+|[Milk, Eggs, Butter, Banana] |
+|[Eggs , Banana]              |
+|[Eggs , Butter, Cheese]      |
+|[Bread, Eggs, Milk]          |
+|[Cheese, Bread, Eggs, Banana]|
+|[Milk , Cheese, Butter]      |
++-----------------------------+
+
+Frequent Item Sets:
++----------------+----+
+|items           |freq|
++----------------+----+
+|[Cheese]        |8   |
+|[Cheese, Bread] |4   |
+|[Eggs]          |7   |
+|[Eggs, Banana]  |4   |
+|[Eggs, Milk]    |6   |
+|[Butter]        |7   |
+|[Butter, Cheese]|4   |
+|[Banana]        |9   |
+|[Banana, Bread] |6   |
+|[Milk]          |7   |
+|[Milk, Banana]  |4   |
+|[Eggs ]         |6   |
+|[Bread]         |12  |
++----------------+----+
+
+Association Rules:
++----------+----------+------------------+------------------+-------+
+|antecedent|consequent|confidence        |lift              |support|
++----------+----------+------------------+------------------+-------+
+|[Cheese]  |[Bread]   |0.5               |0.8333333333333334|0.2    |
+|[Cheese]  |[Butter]  |0.5               |1.4285714285714286|0.2    |
+|[Butter]  |[Cheese]  |0.5714285714285714|1.4285714285714284|0.2    |
+|[Milk]    |[Eggs]    |0.8571428571428571|2.4489795918367347|0.3    |
+|[Milk]    |[Banana]  |0.5714285714285714|1.2698412698412698|0.2    |
+|[Banana]  |[Eggs]    |0.4444444444444444|1.2698412698412698|0.2    |
+|[Banana]  |[Bread]   |0.6666666666666666|1.1111111111111112|0.3    |
+|[Banana]  |[Milk]    |0.4444444444444444|1.2698412698412698|0.2    |
+|[Eggs]    |[Banana]  |0.5714285714285714|1.2698412698412698|0.2    |
+|[Eggs]    |[Milk]    |0.8571428571428571|2.4489795918367347|0.3    |
+|[Bread]   |[Cheese]  |0.3333333333333333|0.8333333333333333|0.2    |
+|[Bread]   |[Banana]  |0.5               |1.1111111111111112|0.3    |
++----------+----------+------------------+------------------+-------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++-----------------------------+-----------------------+
+|Items                        |prediction             |
++-----------------------------+-----------------------+
+|[Eggs , Butter]              |[Cheese]               |
+|[Banana, Milk, Bread, Eggs]  |[Cheese]               |
+|[Bread, Butter]              |[Cheese, Banana]       |
+|[Milk , Bread, Banana]       |[Eggs, Milk, Cheese]   |
+|[Eggs , Bread]               |[Cheese, Banana]       |
+|[Cheese, Bread, Butter]      |[Banana]               |
+|[Cheese, Milk, Banana, Eggs] |[Bread, Butter]        |
+|[Milk , Banana, Bread]       |[Eggs, Milk, Cheese]   |
+|[Milk, Eggs]                 |[Banana]               |
+|[Eggs , Banana, Bread, Milk] |[Eggs, Cheese]         |
+|[Milk, Eggs, Cheese]         |[Bread, Butter, Banana]|
+|[Cheese, Banana, Bread]      |[Butter, Eggs, Milk]   |
+|[Eggs , Bread]               |[Cheese, Banana]       |
+|[Butter, Bread, Cheese]      |[Banana]               |
+|[Milk, Eggs, Butter, Banana] |[Cheese, Bread]        |
+|[Eggs , Banana]              |[Eggs, Bread, Milk]    |
+|[Eggs , Butter, Cheese]      |[Bread]                |
+|[Bread, Eggs, Milk]          |[Banana, Cheese]       |
+|[Cheese, Bread, Eggs, Banana]|[Butter, Milk]         |
+|[Milk , Cheese, Butter]      |[Bread]                |
++-----------------------------+-----------------------+
+
+
+---------------------------------------------------------------------------------------
+
+File Name to be Processed :: Dataset3.csv
+Input Data:
++--------+--------+--------+--------+
+|Item_1  |Item_2  |item_3  |Item_4  |
++--------+--------+--------+--------+
+|Scissors|Stepler |Notebook|null    |
+|Stepler |Notebook|Scissors|Pen     |
+|Pen     |Pencils |Notebook|null    |
+|Pencils |Eraser  |null    |null    |
+|Pencils |Notebook|null    |null    |
+|Notebook|Eraser  |null    |null    |
+|Notebook|Scissors|Stepler |null    |
+|Stepler |Scissors|null    |null    |
+|Notebook|Pen     |null    |null    |
+|Pen     |Pencis  |Eraser  |Stepler |
+|Notebook|Pecils  |Eraser  |null    |
+|Notebook|Pen     |Pencils |null    |
+|Scissors|Stepler |null    |null    |
+|Eraser  |Pencils |null    |null    |
+|Pencils |Notebook|Eraser  |null    |
+|Pencils |Pen     |null    |null    |
+|Pen     |Pencils |Eraser  |Notebook|
+|Stepler |Pen     |null    |null    |
+|Pen     |Eraser  |Notebook|null    |
+|Scissors|Stepler |null    |null    |
++--------+--------+--------+--------+
+
+Items Array Data:
++----------------------------------+
+|Items                             |
++----------------------------------+
+|[Scissors, Stepler, Notebook]     |
+|[Stepler, Notebook, Scissors, Pen]|
+|[Pen, Pencils, Notebook]          |
+|[Pencils, Eraser]                 |
+|[Pencils, Notebook]               |
+|[Notebook, Eraser]                |
+|[Notebook, Scissors, Stepler]     |
+|[Stepler, Scissors]               |
+|[Notebook, Pen]                   |
+|[Pen, Pencis, Eraser, Stepler]    |
+|[Notebook, Pecils, Eraser]        |
+|[Notebook, Pen, Pencils]          |
+|[Scissors, Stepler]               |
+|[Eraser, Pencils]                 |
+|[Pencils, Notebook, Eraser]       |
+|[Pencils, Pen]                    |
+|[Pen, Pencils, Eraser, Notebook]  |
+|[Stepler, Pen]                    |
+|[Pen, Eraser, Notebook]           |
+|[Scissors, Stepler]               |
++----------------------------------+
+
+Frequent Item Sets:
++-------------------+----+
+|items              |freq|
++-------------------+----+
+|[Stepler]          |8   |
+|[Scissors]         |6   |
+|[Scissors, Stepler]|6   |
+|[Eraser]           |8   |
+|[Eraser, Pencils]  |4   |
+|[Eraser, Notebook] |5   |
+|[Pen]              |9   |
+|[Pen, Notebook]    |6   |
+|[Pencils]          |8   |
+|[Pencils, Pen]     |4   |
+|[Pencils, Notebook]|5   |
+|[Notebook]         |12  |
++-------------------+----+
+
+Association Rules:
++----------+----------+------------------+------------------+-------+
+|antecedent|consequent|confidence        |lift              |support|
++----------+----------+------------------+------------------+-------+
+|[Eraser]  |[Pencils] |0.5               |1.25              |0.2    |
+|[Eraser]  |[Notebook]|0.625             |1.0416666666666667|0.25   |
+|[Pencils] |[Eraser]  |0.5               |1.25              |0.2    |
+|[Pencils] |[Pen]     |0.5               |1.1111111111111112|0.2    |
+|[Pencils] |[Notebook]|0.625             |1.0416666666666667|0.25   |
+|[Scissors]|[Stepler] |1.0               |2.5               |0.3    |
+|[Stepler] |[Scissors]|0.75              |2.5               |0.3    |
+|[Notebook]|[Eraser]  |0.4166666666666667|1.0416666666666667|0.25   |
+|[Notebook]|[Pen]     |0.5               |1.1111111111111112|0.3    |
+|[Notebook]|[Pencils] |0.4166666666666667|1.0416666666666667|0.25   |
+|[Pen]     |[Notebook]|0.6666666666666666|1.1111111111111112|0.3    |
+|[Pen]     |[Pencils] |0.4444444444444444|1.111111111111111 |0.2    |
++----------+----------+------------------+------------------+-------+
+
+Input items against all the Association Rules and Displayed as Consequents as prediction:
++----------------------------------+-----------------------------+
+|Items                             |prediction                   |
++----------------------------------+-----------------------------+
+|[Scissors, Stepler, Notebook]     |[Eraser, Pen, Pencils]       |
+|[Stepler, Notebook, Scissors, Pen]|[Eraser, Pencils]            |
+|[Pen, Pencils, Notebook]          |[Eraser]                     |
+|[Pencils, Eraser]                 |[Notebook, Pen]              |
+|[Pencils, Notebook]               |[Eraser, Pen]                |
+|[Notebook, Eraser]                |[Pencils, Pen]               |
+|[Notebook, Scissors, Stepler]     |[Eraser, Pen, Pencils]       |
+|[Stepler, Scissors]               |[]                           |
+|[Notebook, Pen]                   |[Eraser, Pencils]            |
+|[Pen, Pencis, Eraser, Stepler]    |[Pencils, Notebook, Scissors]|
+|[Notebook, Pecils, Eraser]        |[Pencils, Pen]               |
+|[Notebook, Pen, Pencils]          |[Eraser]                     |
+|[Scissors, Stepler]               |[]                           |
+|[Eraser, Pencils]                 |[Notebook, Pen]              |
+|[Pencils, Notebook, Eraser]       |[Pen]                        |
+|[Pencils, Pen]                    |[Eraser, Notebook]           |
+|[Pen, Pencils, Eraser, Notebook]  |[]                           |
+|[Stepler, Pen]                    |[Scissors, Notebook, Pencils]|
+|[Pen, Eraser, Notebook]           |[Pencils]                    |
+|[Scissors, Stepler]               |[]                           |
++----------------------------------+-----------------------------+
+
